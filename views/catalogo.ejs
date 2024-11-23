@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Catálogo</h1>
+        <form action="/catalogo" method="GET">
+            <label for="categoria">Buscar por Artista ou Disco?</label>
+            <select id="categoria" name="categoria" required onchange="atualizarFiltros()">
+                <option value="">Nenhum</option>
+                <option value="artista" <%= categoria === 'artista' ? 'selected' : '' %>>Artista</option>
+                <option value="disco" <%= categoria === 'disco' ? 'selected' : '' %>>Disco</option>
+            </select>
+
+            <div id="titulo-field" style="display: none;">
+                <label for="titulo">Título do Disco:</label>
+                <input type="text" id="titulo" name="titulo" value="<%= titulo || '' %>">
+            </div>
+
+            <div id="nome-field" style="display: none;">
+                <label for="nome">Nome do Artista:</label>
+                <input type="text" id="nome" name="nome" value="<%= nome || '' %>">
+            </div>
+            <label for="genero">Buscar por Gênero Musical:</label>
+            <select id="genero" name="genero">
+                <option value="">Nenhum</option>
+                <option value="generico" <%= genero === 'generico' ? 'selected' : '' %>>Genérico</option>
+                <option value="blues" <%= genero === 'blues' ? 'selected' : '' %>>Blues</option>
+                <option value="country" <%= genero === 'country' ? 'selected' : '' %>>Country</option>
+                <option value="disco" <%= genero === 'disco' ? 'selected' : '' %>>Disco</option>
+                <option value="eletronica" <%= genero === 'eletronica' ? 'selected' : '' %>>Eletrônica</option>
+                <option value="funk" <%= genero === 'funk' ? 'selected' : '' %>>Funk</option>
+                <option value="hiphop" <%= genero === 'hiphop' ? 'selected' : '' %>>Hip Hop</option>
+                <option value="indie" <%= genero === 'indie' ? 'selected' : '' %>>Indie</option>
+                <option value="jazz" <%= genero === 'jazz' ? 'selected' : '' %>>Jazz</option>
+                <option value="kpop" <%= genero === 'kpop' ? 'selected' : '' %>>K-pop</option>
+                <option value="metal" <%= genero === 'metal' ? 'selected' : '' %>>Metal</option>
+                <option value="musicaclassica" <%= genero === 'musicaclassica' ? 'selected' : '' %>>Música Clássica</option>
+                <option value="pop" <%= genero === 'pop' ? 'selected' : '' %>>Pop</option>
+                <option value="punk" <%= genero === 'punk' ? 'selected' : '' %>>Punk</option>
+                <option value="reb" <%= genero === 'reb' ? 'selected' : '' %>>R&B</option>
+                <option value="reggae" <%= genero === 'reggae' ? 'selected' : '' %>>Reggae</option>
+                <option value="rock" <%= genero === 'rock' ? 'selected' : '' %>>Rock</option>
+                <option value="samba" <%= genero === 'samba' ? 'selected' : '' %>>Samba</option>
+                <option value="sertanejo" <%= genero === 'sertanejo' ? 'selected' : '' %>>Sertanejo</option>
+                <option value="soul" <%= genero === 'soul' ? 'selected' : '' %>>Soul</option>
+                <option value="trap" <%= genero === 'trap' ? 'selected' : '' %>>Trap</option>
+            </select>
+            
+
+            <button type="submit">Buscar</button>
+        </form>
+
+        <h2>Resultados</h2>
+        <% if (resultados && resultados.length > 0) { %>
+            <ul>
+                <% resultados.forEach(item => { %>
+                    <li>
+                        <% if (item.titulo) { %>
+                            Disco: <strong><%= item.titulo %></strong> - Gênero: <%= item.genero %> - Ano de Lançamento: <%= item.ano %>
+                            <a href="/editar-disco/<%= item.id %>">Editar Disco</a>
+                        <% } else { %>
+                            Artista: <strong><%= item.nome %></strong> - Gênero: <%= item.genero %>
+                            <a href="/editar-artista/<%= item.id %>">Editar Artista</a>
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>Nenhum resultado encontrado.</p>
+        <% } %>
+
+        <a href="/" class="button-link">
+            <button type="button">Voltar</button>
+        </a>
+    </div>
+
+    <script>
+        function atualizarFiltros() {
+            const categoria = document.getElementById('categoria').value;
+            const tituloField = document.getElementById('titulo-field');
+            const nomeField = document.getElementById('nome-field');
+
+            if (categoria === 'disco') {
+                tituloField.style.display = 'block';
+                nomeField.style.display = 'none';
+            } else if (categoria === 'artista') {
+                tituloField.style.display = 'none';
+                nomeField.style.display = 'block';
+            } else {
+                tituloField.style.display = 'none';
+                nomeField.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+    <script>
+        new MultiSelectTag('genero')
+    </script>
+</body>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.721), rgba(0, 0, 0, 0.934)), url('disco.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 800px;
+        padding: 40px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-size: 1.2em;
+        color: #ddd;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        background-color: #555;
+    }
+
+    button {
+        display: inline-block;
+        padding: 14px 35px;
+        margin-top: 30px;
+        background-color: #a10000;
+        color: white;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-decoration: none;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+        background-color: #c80000;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .button-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+    }
+
+    .button-link button {
+        background-color: #333;
+        color: #fff;
+        border-radius: 40px;
+        padding: 12px 30px;
+        font-size: 1.1em;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .button-link button:hover {
+        background-color: #555;
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 20px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+    }
+
+    li {
+        color: #333;
+    }
+
+</style>
+
+</html>

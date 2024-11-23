@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Disco</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="form-container">
+        <h1>Criar Disco</h1>
+        <form action="disco" method="POST" enctype="multipart/form-data">
+            <!-- Campo para o título do disco -->
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Digite o título do disco" required>
+
+            <!-- Campo para o nome do artista -->
+            <label for="artista">Artista:</label>
+            <input type="text" id="artista" name="artista" placeholder="Digite o nome de um artista" required>
+
+            <!-- Campo para o ano de lançamento -->
+            <label for="ano">Ano de Lançamento:</label>
+            <input type="number" id="ano" name="ano" placeholder="Digite o ano de lançamento" required>
+
+            <!-- Campo para escolher o gênero musical -->
+            <label for="genero">Gênero Musical:</label>
+            <div class="multi-select-container">
+                <select id="genero" name="genero[]" multiple required>
+                    <option value="generico">Genérico</option>
+                    <option value="blues">Blues</option>
+                    <option value="country">Country</option>
+                    <option value="disco">Disco</option>
+                    <option value="eletronica">Eletrônica</option>
+                    <option value="funk">Funk</option>
+                    <option value="hiphop">Hip Hop</option>
+                    <option value="indie">Indie</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="kpop">K-pop</option>
+                    <option value="metal">Metal</option>
+                    <option value="musicaclassica">Música Clássica</option>
+                    <option value="pop">Pop</option>
+                    <option value="punk">Punk</option>
+                    <option value="reb">R&B</option>
+                    <option value="reggae">Reggae</option>
+                    <option value="rock">Rock</option>
+                    <option value="samba">Samba</option>
+                    <option value="sertanejo">Sertanejo</option>
+                    <option value="soul">Soul</option>
+                    <option value="trap">Trap</option>
+                </select>
+            </div>
+
+            <label for="imagem">Capa do Álbum</label>
+            <input type="file" id="imagem" name="imagem" accept="image/*" required>
+
+            <button type="submit">Cadastrar Disco</button>
+        </form>
+
+        <div class="button-link">
+            <a href="/catalogo">
+                <button type="button">Voltar</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+    <script>
+        new MultiSelectTag('genero')
+        new MultiSelectTag('artista')
+    </script>
+</body>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.721), rgba(0, 0, 0, 0.934)), url('disco.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .form-container {
+        width: 98%;
+        max-width: 500px;
+        padding: 40px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-size: 1.2em;
+        color: #ddd;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        background-color: #555;
+    }
+
+    button {
+        display: inline-block;
+        padding: 14px 35px;
+        margin-top: 30px;
+        background-color: #a10000;
+        color: white;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-decoration: none;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+        background-color: #c80000;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .button-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+    }
+
+    .button-link button {
+        background-color: #333;
+        color: #fff;
+        border-radius: 40px;
+        padding: 12px 30px;
+        font-size: 1.1em;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .button-link button:hover {
+        background-color: #555;
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 20px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+    }
+
+    li {
+        color: #333;
+    }
+</style>
+</html>

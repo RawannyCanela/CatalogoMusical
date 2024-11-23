@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Artista</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Editar Artista: <%= artista.nome %></h1>
+        <form action="/editar-artista/<%= artista.id %>" method="POST">
+            <label for="nome">Nome do Artista:</label>
+            <input type="text" id="nome" name="nome" value="<%= artista.nome %>" required>
+
+            <label for="genero">Gênero Musical do Artista:</label>
+            <div class="multi-select-container">
+                <select id="genero" name="genero[]" multiple required>
+                    <option value="generico" <%= artista.genero.includes('generico') ? 'selected' : '' %>>Genérico</option>
+                    <option value="blues" <%= artista.genero.includes('blues') ? 'selected' : '' %>>Blues</option>
+                    <option value="country" <%= artista.genero.includes('country') ? 'selected' : '' %>>Country</option>
+                    <option value="disco" <%= artista.genero.includes('disco') ? 'selected' : '' %>>Disco</option>
+                    <option value="eletronica" <%= artista.genero.includes('eletronica') ? 'selected' : '' %>>Eletrônica</option>
+                    <option value="funk" <%= artista.genero.includes('funk') ? 'selected' : '' %>>Funk</option>
+                    <option value="hiphop" <%= artista.genero.includes('hiphop') ? 'selected' : '' %>>Hip Hop</option>
+                    <option value="indie" <%= artista.genero.includes('indie') ? 'selected' : '' %>>Indie</option>
+                    <option value="jazz" <%= artista.genero.includes('jazz') ? 'selected' : '' %>>Jazz</option>
+                    <option value="kpop" <%= artista.genero.includes('kpop') ? 'selected' : '' %>>K-pop</option>
+                    <option value="metal" <%= artista.genero.includes('metal') ? 'selected' : '' %>>Metal</option>
+                    <option value="musicaclassica" <%= artista.genero.includes('musicaclassica') ? 'selected' : '' %>>Música Clássica</option>
+                    <option value="pop" <%= artista.genero.includes('pop') ? 'selected' : '' %>>Pop</option>
+                    <option value="punk" <%= artista.genero.includes('punk') ? 'selected' : '' %>>Punk</option>
+                    <option value="reb" <%= artista.genero.includes('reb') ? 'selected' : '' %>>R&B</option>
+                    <option value="reggae" <%= artista.genero.includes('reggae') ? 'selected' : '' %>>Reggae</option>
+                    <option value="rock" <%= artista.genero.includes('rock') ? 'selected' : '' %>>Rock</option>
+                    <option value="samba" <%= artista.genero.includes('samba') ? 'selected' : '' %>>Samba</option>
+                    <option value="sertanejo" <%= artista.genero.includes('sertanejo') ? 'selected' : '' %>>Sertanejo</option>
+                    <option value="soul" <%= artista.genero.includes('soul') ? 'selected' : '' %>>Soul</option>
+                    <option value="trap" <%= artista.genero.includes('trap') ? 'selected' : '' %>>Trap</option>
+                </select>
+            </div>
+
+            <div class="buttons-container">
+                <button type="submit">Salvar Alterações</button>
+                <form action="/deletar-artista/<%= artista.id %>" method="POST">
+                    <button type="submit">Deletar Artista</button>
+                </form>
+            </div>
+        </form>
+
+        <a href="/catalogo" class="button-link">
+            <button type="button">Voltar</button>
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+    <script>
+        new MultiSelectTag('genero')  
+    </script>
+</body>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.721), rgba(0, 0, 0, 0.934)), url('/disco.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        padding-top: 5px;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 700px; /* Ajustei o tamanho */
+        max-height: 750px; /* Limitei a altura para evitar scroll */
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 15px;
+        font-weight: 800;
+        color: #c80000;
+        text-transform: uppercase;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-size: 1.2em;
+        color: #ddd;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        background-color: #555;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        justify-content: center;
+    }
+
+    button {
+        display: inline-block;
+        padding: 14px 35px;
+        background-color: #a10000;
+        color: white;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-decoration: none;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+        background-color: #c80000;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .button-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+    }
+
+    .button-link button {
+        background-color: #333;
+        color: #fff;
+        border-radius: 40px;
+        padding: 12px 30px;
+        font-size: 1.1em;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .button-link button:hover {
+        background-color: #555;
+    }
+
+    .multi-select-container {
+        margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 20px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+    }
+
+    li {
+        color: #333;
+    }
+</style>
+</html>
